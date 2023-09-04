@@ -1,33 +1,29 @@
-#include <stdio.h>
 /**
  * main - Entry point
  *
  * Return: 0 on Success
-*/
+ */
+#include <stdio.h>
+
 int main(void)
 {
-int i, j, z, k;
-i = j = z = k = 0;
+int n1, n2;
 
-for (i = 0; i < 10; i++)
+n1 = n2 = 0;
+
+for (n1 = 0; n1 < 99; n1++)
 {
-for (j = 0; j < 9; j++)
+for (n2 = n1 + 1; n2 < 100; n2++)
 {
-for (z = i; z < 10; z++)
-{
-for (k = j + 1; k < 10; k++)
-{
-putchar(i + '0');
-putchar(j + '0');
+putchar((n1 / 10) + '0');
+putchar((n1 % 10) + '0');
 putchar(' ');
-putchar(z + '0');
-putchar(k + '0');
-if (i == 9 && j == 8)
+putchar((n2 / 10) + '0');
+putchar((n2 % 10) + '0');
+if (n1 == 98 && n2 == 99)
 break;
 putchar(',');
 putchar(' ');
-}
-}
 }
 }
 putchar('\n');
