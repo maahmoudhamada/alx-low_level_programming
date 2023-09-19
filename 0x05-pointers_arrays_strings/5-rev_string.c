@@ -1,26 +1,28 @@
 /**
  * rev_string - Function that reverse a string using swap method
  *
- * @s: String to be reversed
+ * @s: string to be reversed
  *
  * Return: Void
- */
+*/
 #include "main.h"
 
 void rev_string(char *s)
 {
-int len, i, j;
-char temp;
-len = i = j = 0;
+int i, j, len;
+char *str, temp;
+
+i = j = len = 0;
+str = s;
 
 for (i = 0; *(s + i) != '\0'; i++)
 ;
-
 len = i - 1;
-for (j = 0; j < len / 2; j++)
+
+for (j = 0; j <= len - 1; j++)
 {
-temp = *(s + j);
-*(s + j) = *(s + len);
-*(s + len--) = temp;
+temp = str[j];
+str[j] = str[len];
+str[len--] = temp;
 }
 }
