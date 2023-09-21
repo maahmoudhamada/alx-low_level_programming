@@ -1,7 +1,7 @@
 /**
- * puts2 - Function to print specific char from a string
+ * puts2 - Function to print even characters only in a string
  *
- * @str: String
+ * @str: String to be printed
  *
  * Return: Void
  */
@@ -9,10 +9,13 @@
 
 void puts2(char *str)
 {
-int i;
+int i = 0;
 
-for (i = 0; *(str + i) != '\0'; i += 2)
+while (*(str + i) != '\0')
+{
+if (i % 2 == 0)
 _putchar(*(str + i));
-
+i++;
+}
 _putchar('\n');
 }
