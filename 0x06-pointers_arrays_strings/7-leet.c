@@ -9,19 +9,15 @@
 
 char *leet(char *s)
 {
-int len, i, j;
+int i, j;
 char *letters = "aeotlAEOTL";
 char *numbers = "4307143071";
 
-len = i = j = 0;
+i = j = 0;
 
-while (*(letters + len) != '\0')
-{
-len++;
-}
 while (*(s + i) != '\0')
 {
-for (j = 0; j < len; j++)
+for (j = 0; j < 11; j++)
 {
 if (*(s + i) == *(letters + j))
 *(s + i) = *(numbers + j);
