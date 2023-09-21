@@ -4,7 +4,7 @@
  * @str: String
  *
  * Return: Pointer to character
-*/
+ */
 #include "main.h"
 
 char *cap_string(char *str)
@@ -14,14 +14,17 @@ int i, j, len;
 len = j = i = 0;
 
 len = sizeof(c) / sizeof(char);
-
-for (i = 0; i < len; i++)
+while (str[i] != '\0')
 {
-for (j = 0; *(str + j) != '\0'; j++)
+if (i == 0 && str[i] >= 'a' && str[i] <= 'z')
+str[i] -= 32;
+for (j = 0; j < len; j++)
 {
-if (str[j] == c[i] && (str[j + 1]) >= 'a' && (str[j + 1] <= 'z'))
-str[j + 1] -= 32;
+if (str[i] == c[j])
+if (str[i + 1] >= 'a' && str[i + 1] <= 'z')
+str[i + 1] -= 32;
 }
+i++;
 }
 return (str);
 }
