@@ -1,3 +1,4 @@
+#include "main.h"
 /**
  * reverse_array - Function to reverse an array of integer
  *
@@ -6,17 +7,17 @@
  *
  * Return: Void
 */
+
 void reverse_array(int *a, int n)
 {
-int t, start, stop;
-t = start = stop = 0;
+int i, tmp, j;
 
-stop = n - 1;
+j = n - 1;
 
-while (start < stop)
+for (i = 0; i < n; i++, n--, j--)
 {
-t = a[start];
-a[start++] = a[stop];
-a[stop--] = t;
+tmp = *(a + i);
+*(a + i) = *(a + j);
+*(a + j) = tmp;
 }
 }
