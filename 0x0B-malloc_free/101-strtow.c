@@ -1,27 +1,11 @@
 #include "main.h"
 
 /**
- * free2D - Function that free Double pointer
+ * wordCount - Function that count words in a string
  *
- * @s: Double pointer
- * @n: Size
+ * @s: String to search within
  *
- * Return: Void
- */
-void free2D(char **s, int n)
-{
-int i = 0;
-for (i = 0; i < n; i++)
-free(s[i]);
-free(s);
-}
-
-/**
- * wordCount - Function that count words in string
- *
- * @s: String
- *
- * Return: Number of words (Integer)
+ * Return: Number(s) of words (Integer)
  */
 int wordCount(char *s)
 {
@@ -31,6 +15,7 @@ for (i = 0; s[i] != '\0'; i++)
 {
 if (s[i] == ' ')
 continue;
+
 if (s[i] != ' ' && (s[i + 1] == ' ' || s[i + 1] == '\0'))
 count++;
 }
@@ -38,15 +23,16 @@ return (count);
 }
 
 /**
- * wordLen - Function that gets length of each word in a string
+ * letterCount - Function that counts letters in each word
  *
- * @s: String
+ * @s: String to be searched within
  *
- * Return: Length of a word (Integer)
+ * Return: Number(s) of letters in a word(s)
  */
-int wordLen(char **s)
+int letterCount(char **s)
 {
 int count = 0;
+
 while (**s != '\0')
 {
 if (**s == ' ')
@@ -63,79 +49,88 @@ return (count);
 }
 
 /**
- * setString - Function that set a string for each word
+ * set - Function that fill a memory location with another string
  *
- * @s: String
- * @len: Length of word
+ * @s1: First string
+ * @s2: Second string
  *
  * Return: Pointer to char
  */
-char *setString(char **s, int len)
+void *set(char *s1, char **s2)
 {
-char *tmp;
 int i = 0;
 
-tmp = malloc((len + 1) * sizeof(char));
-if (tmp == NULL)
-return ('\0');
-else
+while (**s2 != '\0')
 {
-while (**s != '\0')
+if (**s2 == ' ')
+(*s2)++;
+if (**s2 != ' ' && **s2 != '\0')
 {
-if (**s == ' ')
-(*s)++;
-else
-{
-tmp[i] = **s;
+s1[i] = **s2;
+(*s2)++;
 i++;
-(*s)++;
-if (**s == ' ' || **s == '\0')
+if (**s2 == ' ' || **s2 == '\0')
 break;
 }
 }
-tmp[i] = '\0';
-return (tmp);
-}
+s1[i] = '\0';
+return (s1);
 }
 
 /**
- * strtow - Function that split a string to word in 2D array
+ * free2D - Function that frees a 2D array
+ *
+ * @s: 2D array to be freed
+ * @len: Size of the array
+ *
+ * Return: Void
+ */
+void free2D(char **s, int len)
+{
+int i = 0;
+for (i = 0; i < len; i++)
+free(s[i]);
+free(s);
+}
+
+/**
+ * strtow - Function that splits a string to words in 2D array
  *
  * @str: String to be splited
  *
- * Return: 2D array (pointer to pointer to char)
+ * Return: Pointer to pointer to char
  */
 char **strtow(char *str)
 {
-char **ptr, *tmp1, *tmp2, *tmp3;
-int wl, wc, i, j;
-wl = wc = i = j = 0;
-if (str == NULL || *str == '\0')
-return (NULL);
+int i = 0, wc, lc;
+char *tmp1, *tmp2, **p;
+tmp1 = str;
+tmp2 = str;
+
+if (str == NULL || str == 0)
+return ('\0');
+
 wc = wordCount(str);
 if (wc == 0)
 return (NULL);
-ptr = malloc((wc + 1) * sizeof(char *));
-if (ptr == NULL)
-return (NULL);
+p = malloc((wc + 1) * sizeof(char *));
+if (p == NULL)
+return ('\0');
 else
 {
-tmp1 = str;
-tmp2 = str;
 for (i = 0; i < wc; i++)
 {
-wl = wordLen(&tmp1);
-ptr[i] = malloc((wl + 1) * sizeof(char));
-if (ptr[i] == NULL)
-free2D(ptr, wc);
-tmp3 = setString(&tmp2, wl);
-for (j = 0; j < wl; j++)
-ptr[i][j] = tmp3[j];
-ptr[i][j] = '\0';
-wl = 0;
-j = 0;
+lc = letterCount(&tmp1);
+p[i] = malloc((lc + 1) * sizeof(char));
+if (p[i] == NULL)
+{
+free2D(p, wc);
+return (NULL);
 }
-ptr[i] = NULL;
-return (ptr);
+set(p[i], &tmp2);
+lc = 0;
+}
+p[i] = NULL;
+return (p);
 }
 }
