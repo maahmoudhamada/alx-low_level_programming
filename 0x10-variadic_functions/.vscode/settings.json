@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "stdarg.h": "c",
+        "variadic_functions.h": "c"
+    }
+}
