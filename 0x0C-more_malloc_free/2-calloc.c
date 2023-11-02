@@ -8,20 +8,23 @@
  *
  * Return: Void pointer
  */
+
 void *_calloc(unsigned int nmemb, unsigned int size)
 {
-int *tmp;
-void *ptr;
 unsigned int i = 0;
+char *ptr;
 
-tmp = malloc((nmemb * size) * sizeof(int));
-if (tmp == NULL)
+if (nmemb == 0 || size == 0)
+return (NULL);
+
+ptr = malloc(nmemb * size);
+if (ptr == NULL)
 return (NULL);
 else
 {
-for (i = 0; i < (nmemb * size); i++)
-tmp[i] = 0;
-ptr = tmp;
-return (ptr);
+for (i = 0; i < (size * nmemb); i++)
+ptr[i] = 0;
+
+return ((void *)ptr);
 }
 }
