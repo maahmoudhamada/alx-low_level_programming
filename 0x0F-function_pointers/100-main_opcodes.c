@@ -1,22 +1,42 @@
-#include <stdio.h>
 #include <stdlib.h>
-/**
- * main- Entry point
- *
- *@argc: Number of parameters.
-*@argv: Parameeters
+#include <stdio.h>
 
-*
-* Return: Zero (0) in success
-*/
-int main(int argc, char *argv[])
+/**
+ * print_opcodes - print the opcodes of this program
+ * @a: address of the main function
+ * @n: number of bytes to print
+ *
+ * Return: Void
+ */
+void print_opcodes(char *a, int n)
 {
-int i, n;
+int i;
+
+for (i = 0; i < n; i++)
+{
+printf("%.2hhx", a[i]);
+if (i < n - 1)
+printf(" ");
+}
+printf("\n");
+}
+
+/**
+ * main - Function to print op codes
+ *
+ * @argc: Number(s) of arguments
+ * @argv: Arguments
+ *
+ * Return: Integer
+ */
+int main(int argc, char **argv)
+{
+int n;
 
 if (argc != 2)
 {
 printf("Error\n");
-return (1);
+exit(1);
 }
 n = atoi(argv[1]);
 if (n < 0)
@@ -24,14 +44,6 @@ if (n < 0)
 printf("Error\n");
 exit(2);
 }
-
-for (i = 0; i < n; i++)
-{
-printf("%02hhx", *((char *)main + i));
-if (i < n - 1)
-printf(" ");
-else
-printf("\n");
-}
+print_opcodes((char *)&main, n);
 return (0);
 }
