@@ -1,29 +1,29 @@
 #include "lists.h"
 
 /**
-* print_list - Function to print singly list
+* print_list - Function prints a linked list
 *
-* @h: Pointer of type list_t
+* @h: Head of list points to the first node
 *
-* Return: Number of nodes (elements) printed
+* Return: Number of node(s) printed
 */
 
 size_t print_list(const list_t *h)
 {
-size_t count = 0;
-const list_t *traverse;
+const list_t *tra;
+size_t len;
 
-traverse = h;
+tra = h;
 
-for (count = 0; traverse != NULL; count++)
+for (len = 0; tra != NULL; len++)
 {
-if (traverse->str == NULL)
+if (tra->str == NULL)
 printf("[0] (nil)\n");
 else
-printf("[%d] %s\n", traverse->len, traverse->str);
+printf("[%d] %s\n", tra->len, tra->str);
 
-traverse = traverse->next;
+tra = tra->next;
 }
-return (count);
+return (len);
 }
 

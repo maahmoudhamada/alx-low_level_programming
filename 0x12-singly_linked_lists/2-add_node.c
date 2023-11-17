@@ -1,10 +1,10 @@
 #include "lists.h"
 /**
-* _strlen - Function that gets the length of a String
+* _strlen - Function gets the length of a string
 *
-* @s: String to get it length
+* @s: String to be measured
 *
-* Return: Length of a String (integer)
+* Return: Length of string (Integer)
 */
 int _strlen(char *s)
 {
@@ -14,22 +14,25 @@ i++;
 return (i);
 }
 /**
-* add_node - Function that new node in a list
+* add_node - Function add node in stack method
 *
-* @head: Top pointer of type list_t
+* @head: Head of linked list points to first add_node
 * @str: String to be duplicated
 *
-* Return: Pointer to the new added element
+* Return: Address of the new node (element)
 */
 list_t *add_node(list_t **head, const char *str)
 {
 list_t *ptr;
+int len = 0;
 char *tmp;
-int len;
 
-ptr = (list_t *)malloc(sizeof(list_t));
+ptr = malloc(sizeof(list_t));
 if (ptr == NULL)
 return (NULL);
+
+if (*head == NULL)
+ptr->next = NULL;
 
 tmp = strdup(str);
 if (tmp == NULL)
@@ -37,8 +40,9 @@ if (tmp == NULL)
 free(ptr);
 return (NULL);
 }
+
+len = _strlen(tmp);
 ptr->str = tmp;
-len = _strlen (tmp);
 ptr->len = len;
 ptr->next = *head;
 *head = ptr;

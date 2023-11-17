@@ -1,11 +1,13 @@
 #include "lists.h"
+
 /**
-* _strlen - Function that gets the length of a String
+* _strlen - Function gets the length of a string
 *
-* @s: String to get it length
+* @s: String to be measured
 *
-* Return: Length of a String (integer)
+* Return: Length of string (Integer)
 */
+
 int _strlen(char *s)
 {
 int i = 0;
@@ -14,20 +16,20 @@ i++;
 return (i);
 }
 /**
-* add_node_end - Function that add an element in queue
+* add_node_end - Function that add node in queue method
 *
-* @head: Head of list
-* @str: String to be filled
+* @head: Head of linked list points to first node
+* @str: String to be dupliacted
 *
-* Return: Address of new element
+* Return: Address of new node (element)
 */
 list_t *add_node_end(list_t **head, const char *str)
 {
-list_t *ptr, *traverse;
-int len;
+list_t *ptr, *t;
 char *tmp;
+int len = 0;
 
-ptr = (list_t *)malloc(sizeof(list_t));
+ptr = malloc(sizeof(list_t));
 if (ptr == NULL)
 return (NULL);
 tmp = strdup(str);
@@ -43,15 +45,16 @@ if (*head == NULL)
 ptr->str = tmp;
 ptr->len = len;
 ptr->next = NULL;
-return (ptr);
 }
-traverse = *head;
-while (traverse->next != NULL)
-traverse = traverse->next;
-traverse->next = ptr;
+else
+{
+for (t = *head; t->next != NULL; t = t->next)
+;
+t->next = ptr;
 ptr->str = tmp;
 ptr->len = len;
 ptr->next = NULL;
+}
 return (ptr);
 }
 
