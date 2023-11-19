@@ -4,6 +4,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #define max(a, b)(((a) > (b)) ? (a) : (b))
+#define nil "00"
+
 
 
 char *_strcat(char *dest, char *src);
@@ -15,5 +17,6 @@ char *string_toupper(char *);
 char *cap_string(char *str);
 char *leet(char *s);
 char *infinite_add(char *n1, char *n2, char *r, int size_r);
+void print_buffer(char *b, int size);
 
 #endif
