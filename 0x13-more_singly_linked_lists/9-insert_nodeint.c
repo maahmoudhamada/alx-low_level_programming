@@ -39,7 +39,7 @@ listint_t *new, *tmp;
 unsigned int i = 0, len = 0;
 
 len = list_len(*head);
-if ((head == NULL || *head == NULL) || idx > len)
+if (head == NULL || idx > len)
 return (NULL);
 new = malloc(sizeof(listint_t));
 if (new == NULL)
