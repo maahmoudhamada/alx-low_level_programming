@@ -3,66 +3,64 @@
 /**
 * list_len - Function that gets number of node(s) in linked list
 *
-* @h: Head of linked list that points to first node
+* @head: Head of linked list that points to first node
 *
 * Return: Number of nodes
 */
 
-unsigned int list_len(const listint_t *h)
+unsigned int list_len(listint_t *head)
 {
-size_t len = 0;
-const listint_t *ptr;
+listint_t *tmp;
+int len = 0;
 
-ptr = h;
-
-for (len = 0; ptr != NULL; len++, ptr = ptr->next)
-;
+tmp = head;
+while (tmp != NULL)
+{
+tmp = tmp->next;
+len++;
+}
 return (len);
-
 }
 
 /**
-* insert_nodeint_at_index - Function that insert a node in specific pos
+* insert_nodeint_at_index - Function that insert new node in a certain position
 *
-* @head: Head of linked list that points to first node
-* @idx: Index to insert node within
-* @n: Data;
+* @head: Head of linked list points to first node
+* @idx: Position that new node be within
+* @n: Data to be record inside new node
 *
-* Return: Address of the inserted node
+* Return: Address of the new node
 */
+
 
 listint_t *insert_nodeint_at_index(listint_t **head, unsigned int idx, int n)
 {
-unsigned int len, i = 0;
-listint_t *pre, *pst, *ptr;
+listint_t *new, *tmp;
+unsigned int i = 0, len = 0;
+
 len = list_len(*head);
-
-if (*head == NULL || head == NULL || idx > len)
+if ((head == NULL || *head == NULL) || idx > len)
 return (NULL);
-ptr = malloc(sizeof(listint_t));
-if (ptr == NULL)
+new = malloc(sizeof(listint_t));
+if (new == NULL)
 return (NULL);
-
+tmp = *head;
+new->n = n;
 if (idx == 0)
-ptr->next = *head, *head = ptr;
-else if (idx == len)
 {
-for (pre = *head; pre->next != NULL; pre = pre->next)
-;
-pre->next = ptr, ptr->next = NULL;
+new->next = tmp;
+*head = new;
+return (new);
 }
-else
+while (i < idx - 1 && idx != 0)
 {
-for (i = 0, pst = *head; pst != NULL; pst = pst->next, i++)
-{
-if (i + 1 == idx)
-pre = pst;
-else if (i == idx)
-break;
+tmp = tmp->next;
+i++;
 }
-pre->next = ptr, ptr->next = pst;
-}
-ptr->n = n;
-return (ptr);
+if (tmp == NULL)
+return (NULL);
+new->next = tmp->next;
+tmp->next = new;
+return (new);
 }
 
