@@ -1,5 +1,6 @@
 #ifndef MAIN_H
 #define MAIN_H
+#define BUFSZ 1024
 #include <stdio.h>
 #include <fcntl.h>
 #include <unistd.h>
