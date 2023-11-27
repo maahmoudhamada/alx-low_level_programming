@@ -1,106 +1,84 @@
 #include "main.h"
-#include <string.h>
 
 /**
- * _strcmp - Function to compare to 2 String together
- *
- * @s1: First String
- * @s2: Second String
- *
- * Return: Integer
-*/
-
-int _strcmp(char *s1, char *s2)
-{
-int i, cmp;
-i = cmp = 0;
-
-for (i = 0; *(s1 + i) != '\0' || *(s2 + i) != '\0'; i++)
-{
-cmp = *(s1 + i) -*(s2 + i);
-if (cmp < 0 || cmp > 0)
-break;
-else
-continue;
-}
-return (cmp);
-}
-
-/**
-* error_handling - Function to handle errors
+* error_handle - print error message and exit
 *
-* @n1: Indicator
-* @s1: Argument with the error
+* @str: err message as string
+* @file: file name as string
+* @code: exit code
 *
 * Return: void
 */
-
-void error_handling(int n1, char *s1)
+void error_handle(char *str, char *file, int code)
 {
-if (n1 == -1)
-{
-if (_strcmp(s1, "src") == 0)
-{
-dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", s1);
-exit(98);
-}
-else
-{
-dprintf(STDERR_FILENO, "Error: Can't write to %s\n", s1);
-exit(99);
-}
-}
-return;
+dprintf(STDERR_FILENO, str, file);
+exit(code);
 }
 
 /**
-* main - Function that cp one file to another
+* cpy_files - copy source file to destination file
 *
-* @argc: Number of arguments
-* @argv: Arguments
+* @file_from: source file
+* @file_to: destination file
 *
-* Return: Zero (0) on success one (1) otherwise
+* Return: void
 */
+void cpy_files(char *file_from, char *file_to)
+{
+int fdd, fds, readn, writen;
+char buffer[1024];
 
-int main(int argc, char **argv)
-{
-char *src, *dest, buf[BUFSZ];
-int fdd, fds, c1, c2;
-ssize_t rnum, wnum;
+fdd = open(file_from, O_RDONLY);
+if (fdd == -1)
+error_handle("Error: Can't read from file %s\n", file_from, 98);
 
-if (argc != 3)
+fds = open(file_to, O_CREAT | O_WRONLY | O_TRUNC, 0664);
+if (fds == -1)
+error_handle("Error: Can't write to %s\n", file_to, 99);
+
+readn = 1024;
+while (readn == 1024)
 {
-dprintf(STDERR_FILENO, "Usage: cp file_from file_to\n");
-exit(98);
+readn = read(fdd, buffer, 1024);
+if (readn == -1)
+error_handle("Error: Can't read from file %s\n", file_from, 98);
+
+writen = write(fds, buffer, readn);
+
+if (writen == -1)
+error_handle("Error: Can't write to %s\n", file_to, 99);
 }
-src = argv[1], dest = argv[2];
-fdd = open(dest, O_TRUNC | O_RDWR | O_CREAT, 0664);
-fds = open(src, O_RDWR);
-if (fdd == -1 || fds == -1)
+
+if (readn == -1)
+error_handle("Error: Can't read from file %s\n", file_from, 98);
+if (close(fds) == -1)
 {
-error_handling(fdd, dest);
-error_handling(fds, src);
-}
-while (rnum != 0)
-{
-rnum = read(fds, buf, BUFSZ);
-wnum = write(fdd, buf, rnum);
-if (rnum == -1 || wnum == -1)
-{
-error_handling(rnum, "src");
-error_handling(wnum, "dest");
-}
-}
-c1 = close(fdd);
-c2 = close(fds);
-if (c1 == -1 || c2 == -1)
-{
-if (c1 == -1)
-dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fdd);
-else
 dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fds);
 exit(100);
 }
-return (0);
+if (close(fdd) == -1)
+{
+dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fds);
+exit(100);
+}
+}
+/**
+* main - copies a file to another file
+*
+* @argc: Number of Arguments
+* @argv: Arguments
+*
+* Return: 0 on success 1 otherwise
+*/
+int main(int argc, char *argv[])
+{
+if (argc != 3)
+{
+dprintf(STDERR_FILENO, "Usage: cp file_from file_to\n");
+exit(97);
 }
 
+cpy_files(argv[1], argv[2]);
+
+return (0);
+}
