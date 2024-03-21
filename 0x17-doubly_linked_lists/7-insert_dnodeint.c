@@ -1,6 +1,32 @@
 #include "lists.h"
 
 /**
+ * idx_zero - Function to add node on both suitation idx zero
+ *
+ * @h: Head of doubly linked list
+ * @node: New node to insert
+ *
+ * Return: Void
+ */
+
+void idx_zero(dlistint_t **h, dlistint_t **node)
+{
+if (*h == NULL)
+{
+(*node)->next = (*node)->prev = NULL;
+*h = *node;
+}
+
+else
+{
+(*node)->prev = (*h)->prev;
+(*node)->next = *h;
+(*h)->prev = *node;
+*h = *node;
+}
+}
+
+/**
 * dlistint_len - Function to get length of doubly linked list
 *
 * @h: Head of doubly linked list
@@ -43,10 +69,7 @@ return (NULL);
 new->n = n;
 
 if (idx == 0)
-{
-new->prev = (*h)->prev, new->next = *h;
-(*h)->prev = new, *h = new;
-}
+idx_zero(h, &new);
 
 else if (idx == (unsigned int)len)
 {
