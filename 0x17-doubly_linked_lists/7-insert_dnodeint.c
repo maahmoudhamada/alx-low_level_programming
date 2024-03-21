@@ -33,7 +33,7 @@ unsigned int i = 0;
 dlistint_t *before, *after, *new;
 size_t len = dlistint_len(*h);
 
-if (idx >= (unsigned int)len)
+if (*h == NULL || idx >= (unsigned int)len)
 return (NULL);
 
 new = malloc(sizeof(dlistint_t));
