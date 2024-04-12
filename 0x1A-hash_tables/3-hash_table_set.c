@@ -82,7 +82,7 @@ int hash_table_set(hash_table_t *ht, const char *key, const char *value)
 unsigned long int hashCode = 0;
 hash_node_t *currNode, *newNode;
 
-if (key == NULL || value == NULL || !strcmp(key, ""))
+if (key == NULL || value == NULL || !strcmp(key, "") || ht == NULL)
 return (0);
 
 hashCode = key_index((const unsigned char *) key, ht->size);
